@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 // use Illuminate\Http\Request;
 use App\Models\Movie;
 
-class MovieController extends Controller
+class AdminMovieController extends Controller
 {
     public function index()
     {
         $movies = Movie::all();
-        return view('movie/index', ['movies' => $movies]);
+        return view('admin/movies', ['movies' => $movies]);
     }
+
 }
