@@ -28,6 +28,9 @@ class MovieSeeder extends Seeder
                 'title' => '映画タイトル' . $i,
                 // 'image_url' => $faker->imageUrl(640, 480),
                 'image_url' => 'https://placehold.jp/' . $bg_color[$i] .'/ffffff/640x480.png',
+                'published_year' => rand(2000, 2025),
+                'is_showing' => rand(0, 1),
+                'description' => '映画の概要' . $i,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
