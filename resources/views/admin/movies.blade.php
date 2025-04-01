@@ -17,6 +17,7 @@
             <td>概要</td>
             <td>登録日時</td>
             <td>更新日時</td>
+            <td>操作</td>
         </tr>
         @foreach ($movies as $movie)
         <tr>
@@ -28,6 +29,9 @@
             <td>{{ $movie->description }}</td>
             <td>{{ $movie->created_at }}</td>
             <td>{{ $movie->updated_at }}</td>
+            <td>
+                <a href="{{ route('admin.movies.edit', $movie->id) }}">編集</a>
+            </td>
         </tr>
         @endforeach
     </table>

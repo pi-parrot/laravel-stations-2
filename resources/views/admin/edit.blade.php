@@ -7,9 +7,18 @@
     <title>Practice</title>
 </head>
 <body>
-    <div>
-        @if ($message)
-        <div>{{ $message }}</div>
+    <form action="{{ route('admin.movies.update', $movie->id) }}" method="POST">
+        @method('PATCH')
+        @csrf
+        @if (session('message'))
+        <div>{{ session('message') }}</div>
+        @endif
+        @if (session('errors'))
+        <div>
+            @foreach (session('errors')->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
         @endif
         <div>
             <label>
@@ -20,31 +29,31 @@
         <div>
             <label>
                 映画タイトル
-                {{ $movie->title }}
+                <input type="text" name="title" value="{{ $movie->title }}" required>
             </label>
         </div>
         <div>
             <label>
                 画像URL
-                {{ $movie->image_url }}
+                <input type="url" name="image_url" value="{{ $movie->image_url }}" required>
             </label>
         </div>
         <div>
             <label>
                 公開年
-                {{ $movie->published_year }}
+                <input type="number" name="published_year" maxlength="4" value="{{ $movie->published_year }}" required>
             </label>
         </div>
         <div>
             <label>
                 上映中かどうか
-                {{ $movie->is_showing ? '上映中' : '上映予定' }}
+                <input type="checkbox" name="is_showing" value="1" {{ $movie->is_showing ? 'checked' : '' }}>
             </label>
         </div>
         <div>
             <label>
                 概要
-                {!! nl2br(e($movie->description)) !!}
+                <textarea name="description" rows="4" cols="40" required>{{ $movie->description }}</textarea>
             </label>
         </div>
         <div>
@@ -60,8 +69,9 @@
             </label>
         </div>
         <div>
+            <button type="submit">登録</button>
             <a href="{{ route('admin.movies.index') }}">戻る</a>
         </div>
-    </div>
+    </form>
 </body>
 </html>
