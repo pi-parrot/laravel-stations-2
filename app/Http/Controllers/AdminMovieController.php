@@ -35,12 +35,13 @@ class AdminMovieController extends Controller
         }
 
         $movie = new Movie();
-        $movie->title = request('title');
-        $movie->image_url = request('image_url');
-        $movie->published_year = request('published_year');
-        $movie->is_showing = request('is_showing') ? 1 : 0;
-        $movie->description = request('description');
-        $movie->save();
+        $movie->create([
+            'title' => request('title'),
+            'image_url' => request('image_url'),
+            'published_year' => request('published_year'),
+            'is_showing' => request('is_showing') ? 1 : 0,
+            'description' => request('description'),
+        ]);
 
         return redirect()->route('admin.movies.create')->with([
             'message' => '映画が作成されました',
@@ -69,15 +70,27 @@ class AdminMovieController extends Controller
         }
 
         $movie = Movie::findOrFail($id);
-        $movie->title = request('title');
-        $movie->image_url = request('image_url');
-        $movie->published_year = request('published_year');
-        $movie->is_showing = request('is_showing') ? 1 : 0;
-        $movie->description = request('description');
-        $movie->save();
+        // 個別にフィールドを書く癖がつくと大量割り当て保護の意味がなくなるので
+        // 大量割り当てを使うべき
+        $movie->update([
+            'title' => request('title'),
+            'image_url' => request('image_url'),
+            'published_year' => request('published_year'),
+            'is_showing' => request('is_showing') ? 1 : 0,
+            'description' => request('description'),
+        ]);
 
         return redirect()->route('admin.movies.edit', ['id' => $id])->with([
             'message' => '映画が更新されました',
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $movie = Movie::findOrFail($id);
+        $movie->delete();
+        return redirect()->route('admin.movies.index')->with([
+            'message' => '映画が削除されました',
         ]);
     }
 }

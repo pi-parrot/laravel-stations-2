@@ -7,6 +7,9 @@
     <title>Practice</title>
 </head>
 <body>
+    @if (session('message'))
+    <div>{{ session('message') }}</div>
+    @endif
     <table>
         <tr>
             <td>ID</td>
@@ -31,6 +34,11 @@
             <td>{{ $movie->updated_at }}</td>
             <td>
                 <a href="{{ route('admin.movies.edit', $movie->id) }}">編集</a>
+                <button type="button" onclick="if (confirm('本当に削除しますか？')) { document.getElementById('delete-form-{{ $movie->id }}').submit(); }">削除</button>
+                <form id="delete-form-{{ $movie->id }}" action="{{ route('admin.movies.destroy', $movie->id) }}" method="POST">
+                    @method('DELETE')
+                    @csrf
+                </form>
             </td>
         </tr>
         @endforeach
