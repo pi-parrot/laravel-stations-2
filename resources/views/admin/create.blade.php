@@ -9,9 +9,9 @@
 <body>
     <form action="{{ route('admin.movies.store') }}" method="POST">
         @csrf
-        @isset ($message)
-        <div>{{ $message }}</div>
-        @endisset
+        @if (session('message'))
+        <div>{{ session('message') }}</div>
+        @endif
         @if (session('errors'))
         <div>
             @foreach (session('errors')->all() as $error)
@@ -47,6 +47,12 @@
             <label>
                 概要
                 <textarea name="description" rows="4" cols="40" required>{{ old('description') }}</textarea>
+            </label>
+        </div>
+        <div>
+            <label>
+                ジャンル名
+                <input type="text" name="genre" value="{{ old('genre') }}" required>
             </label>
         </div>
         <div>

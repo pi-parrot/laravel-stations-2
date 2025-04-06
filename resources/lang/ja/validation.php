@@ -19,6 +19,7 @@ return [
         'published_year' => '公開年',
         'is_showing' => '上映中かどうか',
         'description' => '概要',
+        'genre' => 'ジャンル',
     ],
     'before'                 => ':Attributeには、:dateより前の日付を指定してください。',
     'before_or_equal'        => ':Attributeには、:date以前の日付を指定してください。',

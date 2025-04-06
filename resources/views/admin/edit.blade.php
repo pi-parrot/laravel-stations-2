@@ -58,6 +58,12 @@
         </div>
         <div>
             <label>
+                ジャンル名
+                <input type="text" name="genre" value="{{ $movie->genre->name }}" required>
+            </label>
+        </div>
+        <div>
+            <label>
                 登録日時
                 {{ $movie->created_at }}
             </label>
