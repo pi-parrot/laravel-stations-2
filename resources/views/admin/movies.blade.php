@@ -10,6 +10,35 @@
     @if (session('message'))
     <div>{{ session('message') }}</div>
     @endif
+    <form action="{{ route('admin.movies.index') }}" method="GET">
+        <div>
+            <label>
+                キーワード
+                <input type="text" name="keyword" value="{{ request('keyword') }}">
+            </label>
+        </div>
+        <div>
+            上映中かどうか
+            <label>
+                <input type="radio" name="is_showing" value="" {{ !in_array(request('is_showing'), ['0', '1']) ? 'checked' : '' }}>
+                すべて
+            </label>
+            <label>
+                <input type="radio" name="is_showing" value="1" {{ request('is_showing') === '1' ? 'checked' : '' }}>
+                公開中
+            </label>
+            <label>
+                <input type="radio" name="is_showing" value="0" {{ request('is_showing') === '0' ? 'checked' : '' }}>
+                公開予定
+            </label>
+        </div>
+        <div>
+            <button type="submit">検索</button>
+        </div>
+    </form>
+
+    {{ $movies->appends(request()->query())->links() }}
+
     <table>
         <tr>
             <td>ID</td>
@@ -43,5 +72,8 @@
         </tr>
         @endforeach
     </table>
+
+    {{ $movies->appends(request()->query())->links() }}
+
 </body>
 </html>
