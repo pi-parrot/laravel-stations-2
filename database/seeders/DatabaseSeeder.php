@@ -14,9 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call([
-        //     // ここに Seeder を追加する
-        // ]);
+        $this->call([
+            // ここに Seeder を追加する
+            SheetSeeder::class,
+        ]);
         Practice::factory(10)->create();
     }
 }
