@@ -16,7 +16,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             // ここに Seeder を追加する
+            MovieSeeder::class,
             SheetSeeder::class,
+            ScheduleSeeder::class,
         ]);
         Practice::factory(10)->create();
     }

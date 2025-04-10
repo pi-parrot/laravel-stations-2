@@ -14,10 +14,25 @@ class MovieSeeder extends Seeder
      */
     public function run(): void
     {
+        // DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        // DB::table('movies')->truncate();
+        // DB::table('genres')->truncate();
+        // DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+        $genres = ['アクション', '恋愛', 'SF', 'ドラマ', 'アニメ'];
+        foreach ($genres as $genre) {
+            DB::table('genres')->insert([
+                'name' => $genre,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
         // $faker = Faker::create('ja_JP');
         for ($i = 1; $i <= 41; $i++) {
             $bg_color = sprintf('%02x%02x%02x', rand(0, 99), rand(0, 99), rand(0, 99));
             $param = [
+                'genre_id' => rand(1, 5),
                 'title' => '映画タイトル' . $i,
                 // 'image_url' => $faker->imageUrl(640, 480),
                 'image_url' => 'https://placehold.jp/' . $bg_color . '/ffffff/640x480.png',

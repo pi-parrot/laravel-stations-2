@@ -37,10 +37,10 @@
     {{ $movies->appends(request()->query())->links() }}
 
     @foreach ($movies as $movie)
-    <div>
+    <a href="{{ route('movies.show', $movie->id) }}">
         <div>{{ $movie->title }}</div>
         <img src="{{ $movie->image_url }}" alt="{{ $movie->title }}">
-    </div>
+    </a>
     @endforeach
 
     {{ $movies->appends(request()->query())->links() }}
