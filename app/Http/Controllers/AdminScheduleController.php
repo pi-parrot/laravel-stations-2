@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Rules\ValidateStartAndEndTimes;
 // use Illuminate\Support\Facades\DB;
 
 class AdminScheduleController extends Controller
@@ -23,14 +24,20 @@ class AdminScheduleController extends Controller
 
     public function store(Request $request)
     {
-        // レイトショーなどでは時刻だけ見ると終了が開始より前の可能性があるため、
-        // 時刻の前後は検証しない
         $validator = Validator::make(request()->all(), [
             'movie_id' => 'required|exists:movies,id',
             'start_time_date' => 'required|date_format:Y-m-d|before_or_equal:end_time_date',
-            'start_time_time' => 'required|date_format:H:i',
+            'start_time_time' => [
+                'required',
+                'date_format:H:i',
+                new ValidateStartAndEndTimes(),
+            ],
             'end_time_date' => 'required|date_format:Y-m-d|after_or_equal:start_time_date',
-            'end_time_time' => 'required|date_format:H:i',
+            'end_time_time' => [
+                'required',
+                'date_format:H:i',
+                new ValidateStartAndEndTimes(),
+            ],
         ]);
         $validator->validate();
 
@@ -62,9 +69,17 @@ class AdminScheduleController extends Controller
         $validator = Validator::make(request()->all(), [
             'movie_id' => 'required|exists:movies,id',
             'start_time_date' => 'required|date_format:Y-m-d|before_or_equal:end_time_date',
-            'start_time_time' => 'required|date_format:H:i',
+            'start_time_time' => [
+                'required',
+                'date_format:H:i',
+                new ValidateStartAndEndTimes(),
+            ],
             'end_time_date' => 'required|date_format:Y-m-d|after_or_equal:start_time_date',
-            'end_time_time' => 'required|date_format:H:i',
+            'end_time_time' => [
+                'required',
+                'date_format:H:i',
+                new ValidateStartAndEndTimes(),
+            ],
         ]);
         $validator->validate();
 
