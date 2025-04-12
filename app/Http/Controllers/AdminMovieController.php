@@ -144,4 +144,10 @@ class AdminMovieController extends Controller
             'message' => '映画が削除されました',
         ]);
     }
+
+    public function show($id)
+    {
+        $movie = Movie::with('schedules')->findOrFail($id);
+        return view('admin/show', ['movie' => $movie]);
+    }
 }

@@ -56,7 +56,7 @@
         @foreach ($movies as $movie)
         <tr>
             <td>{{ $movie->id }}</td>
-            <td>{{ $movie->title }}</td>
+            <td><a href="{{ route('admin.movies.show', $movie->id) }}">{{ $movie->title }}</a></td>
             <td>{{ $movie->image_url }}</td>
             <td>{{ $movie->published_year }}</td>
             <td>{{ $movie->is_showing ? '上映中' : '上映予定' }}</td>
