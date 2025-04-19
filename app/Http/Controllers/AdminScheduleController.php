@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-// use App\Models\Movie;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\ValidateStartAndEndTimes;
-// use Illuminate\Support\Facades\DB;
 
 class AdminScheduleController extends Controller
 {
@@ -39,13 +37,10 @@ class AdminScheduleController extends Controller
                 new ValidateStartAndEndTimes(),
             ],
         ]);
-        $validator->validate();
 
         if ($validator->fails()) {
-            session()->flash('errors', $validator->errors()->messages());
-            return redirect()->back()->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-
         $schedule = new Schedule();
         $schedule->create([
             'movie_id' => request('id'),
@@ -81,13 +76,10 @@ class AdminScheduleController extends Controller
                 new ValidateStartAndEndTimes(),
             ],
         ]);
-        $validator->validate();
 
         if ($validator->fails()) {
-            session()->flash('errors', $validator->errors()->messages());
-            return redirect()->back()->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-
 
         $schedule = Schedule::findOrFail($scheduleId);
         $schedule->update([

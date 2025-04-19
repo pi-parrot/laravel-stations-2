@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-// use Faker\Factory as Faker;
+use App\Models\Genre;
+use App\Models\Movie;
 
 class MovieSeeder extends Seeder
 {
@@ -14,17 +14,15 @@ class MovieSeeder extends Seeder
      */
     public function run(): void
     {
-        // DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        // DB::table('movies')->truncate();
-        // DB::table('genres')->truncate();
-        // DB::statement('SET FOREIGN_KEY_CHECKS=1');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        Movie::truncate();
+        Genre::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
         $genres = ['アクション', '恋愛', 'SF', 'ドラマ', 'アニメ'];
         foreach ($genres as $genre) {
-            DB::table('genres')->insert([
+            Genre::create([
                 'name' => $genre,
-                'created_at' => now(),
-                'updated_at' => now(),
             ]);
         }
 
@@ -39,10 +37,8 @@ class MovieSeeder extends Seeder
                 'published_year' => rand(2000, 2025),
                 'is_showing' => rand(0, 1),
                 'description' => '映画の概要' . $i,
-                'created_at' => now(),
-                'updated_at' => now(),
             ];
-            DB::table('movies')->insert($param);
+            Movie::create($param);
         }
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Controllers\SheetController;
 use App\Http\Controllers\AdminMovieController;
 use App\Http\Controllers\AdminScheduleController;
+use App\Http\Controllers\ReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,25 +21,19 @@ use App\Http\Controllers\AdminScheduleController;
 
 // Route::get('URL', [Controllerの名前::class, 'Controller内のfunction名']);
 
-// Route::get('practice', function() {
-//     return response('practice');
-// });
 Route::get('/practice', [PracticeController::class, 'sample']);
-// Route::get('practice2', function() {
-//     $test = 'practice2';
-//     return response($test);
-// });
 Route::get('/practice2', [PracticeController::class, 'sample2']);
-// Route::get('practice3', function() {
-//     return response('test');
-// });
 Route::get('/practice3', [PracticeController::class, 'sample3']);
 Route::get('/getPractice', [PracticeController::class, 'getPractice']);
 
 Route::get('/movies', [MovieController::class, 'index'])->name('movies.index');
 Route::get('/movies/{id}', [MovieController::class, 'show'])->name('movies.show');
+Route::get('/movies/{movie_id}/schedules/{schedule_id}/sheets', [SheetController::class, 'reserve'])->name('sheets.reserve');
+Route::get('/movies/{movie_id}/schedules/{schedule_id}/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
 
 Route::get('/sheets', [SheetController::class, 'index'])->name('sheets.index');
+
+Route::post('/reservations/store', [ReservationController::class, 'store'])->name('reservations.store');
 
 Route::get('/admin/movies', [AdminMovieController::class, 'index'])->name('admin.movies.index');
 Route::get('/admin/movies/create', [AdminMovieController::class, 'create'])->name('admin.movies.create');

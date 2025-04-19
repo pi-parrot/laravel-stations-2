@@ -29,4 +29,9 @@ class Schedule extends Model
     {
         return $this->belongsTo(Movie::class);
     }
+
+    function sheet()
+    {
+        return $this->hasMany(Sheet::class);
+    }
 }

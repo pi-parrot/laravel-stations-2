@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Movie;
+use App\Models\Schedule;
 use Carbon\Carbon;
 
 class ScheduleSeeder extends Seeder
@@ -14,7 +14,7 @@ class ScheduleSeeder extends Seeder
      */
     public function run(): void
     {
-        $movies = DB::table('movies')->get();
+        $movies = Movie::all();
 
         $today = Carbon::today()->format('Y-m-d');
         $schedules = [
@@ -24,7 +24,7 @@ class ScheduleSeeder extends Seeder
         ];
         foreach ($movies as $movie) {
             foreach ($schedules as $schedule) {
-                DB::table('schedules')->insert([
+                Schedule::create([
                     'movie_id' => $movie->id,
                     'start_time' => $schedule['start'],
                     'end_time' => $schedule['end'],

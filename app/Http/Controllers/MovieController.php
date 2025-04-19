@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-// use Illuminate\Http\Request;
 use App\Models\Movie;
-// use Illuminate\Support\Facades\DB;
+use Carbon\CarbonImmutable;
 
 class MovieController extends Controller
 {
     public function index()
     {
-        // $movies = Movie::all();
         $query = Movie::query();
-        // $query = Movie::with('schedules');
 
         if (request('keyword') !== null && request('keyword') !== '') {
             $keyword = request('keyword');
@@ -35,16 +32,11 @@ class MovieController extends Controller
 
     public function show($id)
     {
-        // $movie = Movie::findOrFail($id);
-        // $schedules = DB::table('schedules')
-        //     ->where('movie_id', $id)
-        //     ->orderBy('start_time', 'asc')
-        //     ->get();
         $movie = Movie::with('schedules')->findOrFail($id);
 
         return view('movie/show', [
             'movie' => $movie,
-            // 'schedules' => $schedules,
+            'date' => CarbonImmutable::now()->format('Y-m-d'),
         ]);
     }
 }

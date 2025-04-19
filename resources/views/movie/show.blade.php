@@ -7,6 +7,16 @@
     <title>Practice</title>
 </head>
 <body>
+    @if (session('message'))
+    <div>{{ session('message') }}</div>
+    @endif
+    @if (session('errors'))
+    <div>
+        @foreach (session('errors')->all() as $error)
+        <p>{{ $error }}</p>
+        @endforeach
+    </div>
+    @endif
     <p>ID: {{ $movie->id }}</p>
     <h1>{{ $movie->title }}</h1>
     <img src="{{ $movie->image_url }}" alt="{{ $movie->title }}">
@@ -23,9 +33,13 @@
     @if ($movie->schedules->isNotEmpty())
         <ul>
             @foreach ($movie->schedules as $schedule)
-                <li>
-                    {{ $schedule->start_time->format('H:i') }} - {{ $schedule->end_time->format('H:i') }}
-                </li>
+            <li>
+                {{ $schedule->start_time->format('H:i') }} - {{ $schedule->end_time->format('H:i') }}
+                <form action="{{ route('sheets.reserve', [$movie->id, $schedule->id]) }}" method="GET">
+                    <input type="hidden" name="date" value="{{ $date }}">
+                    <button type="submit" class="btn btn-primary">座席を予約する</button>
+                </form>
+            </li>
             @endforeach
         </ul>
     @else

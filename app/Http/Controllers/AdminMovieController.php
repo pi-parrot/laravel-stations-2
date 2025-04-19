@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-// use Illuminate\Http\Request;
 use App\Models\Movie;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -12,8 +11,6 @@ class AdminMovieController extends Controller
 {
     public function index()
     {
-        // $movies = Movie::all();
-        // $query = Movie::query();
         $query = Movie::with('genre');
 
         if (request('keyword') !== null && request('keyword') !== '') {
@@ -50,11 +47,8 @@ class AdminMovieController extends Controller
             'description' => 'required|string',
             'genre' => 'required|string',
         ]);
-        $validator->validate();
-
         if ($validator->fails()) {
-            session()->flash('errors', $validator->errors()->messages());
-            return redirect()->back()->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         DB::beginTransaction();
@@ -74,8 +68,6 @@ class AdminMovieController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            // session()->flash('errors', ['error' => '映画の作成に失敗しました']);
-            // return redirect()->back()->withInput();
             abort(500);
         }
 
@@ -100,11 +92,8 @@ class AdminMovieController extends Controller
             'description' => 'required|string',
             'genre' => 'required|string',
         ]);
-        $validator->validate();
-
         if ($validator->fails()) {
-            session()->flash('errors', $validator->errors()->messages());
-            return redirect()->back()->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         DB::beginTransaction();
@@ -112,8 +101,6 @@ class AdminMovieController extends Controller
             $genre = Genre::firstOrCreate(['name' => request('genre')]);
 
             $movie = Movie::findOrFail($id);
-            // 個別にフィールドを書く癖がつくと大量割り当て保護の意味がなくなるので
-            // 大量割り当てを使うべき
             $movie->update([
                 'title' => request('title'),
                 'image_url' => request('image_url'),
@@ -126,8 +113,6 @@ class AdminMovieController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            // session()->flash('errors', ['error' => '映画の更新に失敗しました']);
-            // return redirect()->back()->withInput();
             abort(500);
         }
 

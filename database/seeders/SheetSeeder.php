@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Sheet;
 
 class SheetSeeder extends Seeder
 {
@@ -15,7 +14,7 @@ class SheetSeeder extends Seeder
     {
         foreach (['a', 'b', 'c'] as $row) {
             for ($column = 1; $column <= 5; $column++) {
-                DB::table('sheets')->insert([
+                Sheet::create([
                     'column' => $column,
                     'row' => $row,
                 ]);
