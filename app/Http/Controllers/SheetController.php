@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sheet;
 use App\Models\Schedule;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -37,7 +38,12 @@ class SheetController extends Controller
         foreach ($_sheets as $sheet) {
             $sheets[$sheet->row][$sheet->column] = $sheet;
         }
-        $schedule = Schedule::find($request->schedule_id);
-        return view('sheets', ['sheets' => $sheets, 'request' => $request, 'schedule' => $schedule]);
+        $schedule = Schedule::findOrFail($request->schedule_id);
+
+        // 該当するスケジュールの予約を取得する
+        $reservation = Reservation::where('schedule_id', $request->schedule_id)
+            ->pluck('sheet_id')->toArray();
+
+        return view('reserve', ['sheets' => $sheets, 'request' => $request, 'schedule' => $schedule, 'reservation' => $reservation]);
     }
 }

@@ -12,8 +12,11 @@ class ReservationController extends Controller
     public function create(Request $request)
     {
         // 日付フォーマットのバリデーションはあえて緩くしている
+        // schedule_id, sheet_idのユニークチェックは後で別途行うため
+        // バリデータ側では行わない
         $validator = Validator::make(request()->all(), [
             'date' => 'required|date|after_or_equal:today',
+            'schedule_id' => 'required',
             'sheetId' => 'required',
         ]);
 
@@ -23,6 +26,14 @@ class ReservationController extends Controller
             } elseif ($validator->errors()->has('sheetId')) {
                 abort(400, '座席IDを指定してください。');
             }
+        }
+
+        // schedule_id, sheet_idのユニークチェック
+        $existingReservation = Reservation::where('schedule_id', $request->schedule_id)
+            ->where('sheet_id', $request->sheetId)
+            ->first();
+        if ($existingReservation) {
+            abort(400, 'その座席はすでに予約済みです。');
         }
 
         $schedule = Schedule::with('movie')->find($request->schedule_id);
