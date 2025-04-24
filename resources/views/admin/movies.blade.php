@@ -10,31 +10,31 @@
     @if (session('message'))
     <div>{{ session('message') }}</div>
     @endif
-    <a href="{{ route('admin.movies.create') }}">新規登録</a>
+    <a href="{{ route('admin.movies.create') }}">{{ __('Create New') }}</a>
     <form action="{{ route('admin.movies.index') }}" method="GET">
         <div>
             <label>
-                キーワード
+                {{ __('Keyword') }}
                 <input type="text" name="keyword" value="{{ request('keyword') }}">
             </label>
         </div>
         <div>
-            上映中かどうか
+            {{ __('Is Showing Status') }}
             <label>
                 <input type="radio" name="is_showing" value="" {{ !in_array(request('is_showing'), ['0', '1']) ? 'checked' : '' }}>
-                すべて
+                {{ __('All') }}
             </label>
             <label>
                 <input type="radio" name="is_showing" value="1" {{ request('is_showing') === '1' ? 'checked' : '' }}>
-                公開中
+                {{ __('Showing Status Showing') }}
             </label>
             <label>
                 <input type="radio" name="is_showing" value="0" {{ request('is_showing') === '0' ? 'checked' : '' }}>
-                公開予定
+                {{ __('Showing Status Not Showing') }}
             </label>
         </div>
         <div>
-            <button type="submit">検索</button>
+            <button type="submit">{{ __('Search') }}</button>
         </div>
     </form>
 
@@ -42,16 +42,16 @@
 
     <table>
         <tr>
-            <td>ID</td>
-            <td>映画タイトル</td>
-            <td>画像URL</td>
-            <td>公開年</td>
-            <td>上映中かどうか</td>
-            <td>概要</td>
-            <td>ジャンル名</td>
-            <td>登録日時</td>
-            <td>更新日時</td>
-            <td>操作</td>
+            <td>{{ __('ID') }}</td>
+            <td>{{ __('Movie Title') }}</td>
+            <td>{{ __('Image URL') }}</td>
+            <td>{{ __('Published Year') }}</td>
+            <td>{{ __('Is Showing') }}</td>
+            <td>{{ __('Description') }}</td>
+            <td>{{ __('Genre Name') }}</td>
+            <td>{{ __('Created At') }}</td>
+            <td>{{ __('Updated At') }}</td>
+            <td>{{ __('Actions') }}</td>
         </tr>
         @foreach ($movies as $movie)
         <tr>
@@ -59,14 +59,18 @@
             <td><a href="{{ route('admin.movies.show', $movie->id) }}">{{ $movie->title }}</a></td>
             <td>{{ $movie->image_url }}</td>
             <td>{{ $movie->published_year }}</td>
-            <td>{{ $movie->is_showing ? '上映中' : '上映予定' }}</td>
+            <td>{{ $movie->is_showing ? __('Showing Status Showing') : __('Showing Status Not Showing') }}</td>
             <td>{{ $movie->description }}</td>
-            <td>{{ $movie->genre->name }}</td> 
+            <td>{{ $movie->genre->name }}</td>
             <td>{{ $movie->created_at }}</td>
             <td>{{ $movie->updated_at }}</td>
             <td>
-                <a href="{{ route('admin.movies.edit', $movie->id) }}">編集</a>
-                <button type="button" onclick="if (confirm('本当に削除しますか？')) { document.getElementById('delete-form-{{ $movie->id }}').submit(); }">削除</button>
+                <a href="{{ route('admin.movies.edit', $movie->id) }}">{{ __('Edit') }}</a>
+                <button type="button"
+                        data-confirm-message="{{ __('Are you sure you want to delete?') }}"
+                        onclick="if (confirm(this.dataset.confirmMessage)) { document.getElementById('delete-form-{{ $movie->id }}').submit(); }">
+                    {{ __('Delete') }}
+                </button>
                 <form id="delete-form-{{ $movie->id }}" action="{{ route('admin.movies.destroy', $movie->id) }}" method="POST">
                     @method('DELETE')
                     @csrf

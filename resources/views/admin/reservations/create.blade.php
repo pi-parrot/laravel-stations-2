@@ -21,7 +21,7 @@
         @endif
         <div>
             <label>
-                上映スケジュール
+                {{ __('Schedule') }}
                 <select name="schedule_id">
                     @foreach ($schedules as $schedule)
                     <option value="{{ $schedule->id }}">{{ $schedule->movie->title }} - {{ $schedule->start_time->format('Y-m-d H:i') }} - {{ $schedule->end_time->format('Y-m-d H:i') }}</option>
@@ -31,7 +31,7 @@
         </div>
         <div>
             <label>
-                座席
+                {{ __('Seat') }}
                 <select name="sheet_id">
                     @foreach ($sheets as $sheet)
                     <option value="{{ $sheet->id }}">{{ strtoupper($sheet->row . $sheet->column) }}</option>
@@ -41,25 +41,25 @@
         </div>
         <div>
             <label>
-                日付
+                {{ __('Date') }}
                 <input type="date" name="date" value="{{ old('date') }}" required>
             </label>
         </div>
         <div>
             <label>
-                予約者氏名
+                {{ __('Reserved Name') }}
                 <input type="text" name="name" value="{{ old('name') }}" required>
             </label>
         </div>
         <div>
             <label>
-                予約者メールアドレス
+                {{ __('Reserved Email') }}
                 <input type="email" name="email" value="{{ old('email') }}" required>
             </label>
         </div>
         <div>
-            <button type="submit">登録</button>
-            <a href="{{ route('admin.reservations.index', ['id' => $schedule->movie->id]) }}">戻る</a>
+            <button type="submit">{{ __('Submit') }}</button>
+            <a href="{{ route('admin.reservations.index', ['id' => $schedule->movie->id]) }}">{{ __('Back') }}</a>
         </div>
     </form>
 </body>

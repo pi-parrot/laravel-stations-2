@@ -7,6 +7,6 @@
     <title>Practice</title>
 </head>
 <body>
-    <strong>練習</strong>
+    <strong>{{ __('Practice') }}</strong>
 </body>
 </html>

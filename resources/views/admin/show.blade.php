@@ -10,67 +10,67 @@
     <div>
         <div>
             <label>
-                ID
+                {{ __('ID') }}
                 {{ $movie->id }}
             </label>
         </div>
         <div>
             <label>
-                映画タイトル
+                {{ __('Movie Title') }}
                 {{ $movie->title }}
             </label>
         </div>
         <div>
             <label>
-                画像URL
+                {{ __('Image URL') }}
                 <img src="{{ $movie->image_url }}" alt="{{ $movie->title }}">
             </label>
         </div>
         <div>
             <label>
-                公開年
+                {{ __('Published Year') }}
                 {{ $movie->published_year }}
             </label>
         </div>
         <div>
             <label>
-                上映中かどうか
-                {{ $movie->is_showing ? 'checked' : '' }}
+                {{ __('Is Showing') }}
+                {{ $movie->is_showing ? __('Showing Status Showing') : __('Showing Status Not Showing') }}
             </label>
         </div>
         <div>
             <label>
-                概要
+                {{ __('Description') }}
                 {{ $movie->description }}
             </label>
         </div>
         <div>
             <label>
-                ジャンル名
+                {{ __('Genre Name') }}
                 {{ $movie->genre->name }}
             </label>
         </div>
         <div>
             <label>
-                登録日時
+                {{ __('Created At') }}
                 {{ $movie->created_at }}
             </label>
         </div>
         <div>
             <label>
-                更新日時
+                {{ __('Updated At') }}
                 {{ $movie->updated_at }}
             </label>
         </div>
-        <a href="{{ route('admin.schedules.index', $movie->id) }}">上映予定一覧</a>
-        <a href="{{ route('admin.schedules.create', $movie->id) }}">上映予定新規作成</a>
+        <a href="{{ route('admin.schedules.index', $movie->id) }}">{{ __('Schedule List') }}</a>
+        <a href="{{ route('admin.schedules.create', $movie->id) }}">{{ __('Create New Schedule') }}</a>
         @foreach ($movie->schedules as $schedule)
         <ul>
             <li><a href="{{ route('admin.schedules.show', $schedule->id) }}">{{ $schedule->start_time }} - {{ $schedule->end_time }}</a></li>
         </ul>
         @endforeach
         <div>
-            <a href="{{ route('admin.movies.index') }}">戻る</a>
+            <a href="{{ route('admin.movies.index') }}">{{ __('Back') }}</a>
         </div>
 </div>
 </body>

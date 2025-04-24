@@ -10,27 +10,27 @@
     <form action="{{ route('movies.index') }}" method="GET">
         <div>
             <label>
-                キーワード
+                {{ __('Keyword') }}
                 <input type="text" name="keyword" value="{{ request('keyword') }}">
             </label>
         </div>
         <div>
-            上映中かどうか
+            {{ __('Is Showing Status') }}
             <label>
                 <input type="radio" name="is_showing" value="" {{ !in_array(request('is_showing'), ['0', '1']) ? 'checked' : '' }}>
-                すべて
+                {{ __('All') }}
             </label>
             <label>
                 <input type="radio" name="is_showing" value="1" {{ request('is_showing') === '1' ? 'checked' : '' }}>
-                公開中
+                {{ __('Showing Status Showing') }}
             </label>
             <label>
                 <input type="radio" name="is_showing" value="0" {{ request('is_showing') === '0' ? 'checked' : '' }}>
-                公開予定
+                {{ __('Showing Status Not Showing') }}
             </label>
         </div>
         <div>
-            <button type="submit">検索</button>
+            <button type="submit">{{ __('Search') }}</button>
         </div>
     </form>
 

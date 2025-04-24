@@ -22,61 +22,61 @@
         @endif
         <div>
             <label>
-                ID
+                {{ __('ID') }}
                 {{ $movie->id }}
             </label>
         </div>
         <div>
             <label>
-                映画タイトル
+                {{ __('Movie Title') }}
                 <input type="text" name="title" value="{{ $movie->title }}" required>
             </label>
         </div>
         <div>
             <label>
-                画像URL
+                {{ __('Image URL') }}
                 <input type="url" name="image_url" value="{{ $movie->image_url }}" required>
             </label>
         </div>
         <div>
             <label>
-                公開年
+                {{ __('Published Year') }}
                 <input type="number" name="published_year" maxlength="4" value="{{ $movie->published_year }}" required>
             </label>
         </div>
         <div>
             <label>
-                上映中かどうか
+                {{ __('Is Showing') }}
                 <input type="checkbox" name="is_showing" value="1" {{ $movie->is_showing ? 'checked' : '' }}>
             </label>
         </div>
         <div>
             <label>
-                概要
+                {{ __('Description') }}
                 <textarea name="description" rows="4" cols="40" required>{{ $movie->description }}</textarea>
             </label>
         </div>
         <div>
             <label>
-                ジャンル名
+                {{ __('Genre Name') }}
                 <input type="text" name="genre" value="{{ $movie->genre->name }}" required>
             </label>
         </div>
         <div>
             <label>
-                登録日時
+                {{ __('Created At') }}
                 {{ $movie->created_at }}
             </label>
         </div>
         <div>
             <label>
-                更新日時
+                {{ __('Updated At') }}
                 {{ $movie->updated_at }}
             </label>
         </div>
         <div>
-            <button type="submit">登録</button>
-            <a href="{{ route('admin.movies.index') }}">戻る</a>
+            <button type="submit">{{ __('Submit') }}</button>
+            <a href="{{ route('admin.movies.index') }}">{{ __('Back') }}</a>
         </div>
     </form>
 </body>

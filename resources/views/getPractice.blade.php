@@ -9,7 +9,7 @@
 <body>
     <ul>
     @foreach ($practices as $practice)
-        <li>タイトル: {{ $practice->title }}</li>
+        <li>{{ __('Title') }}: {{ $practice->title }}</li>
     @endforeach
     </ul>
 </body>

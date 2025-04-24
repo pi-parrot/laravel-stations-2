@@ -17,19 +17,19 @@
         @endforeach
     </div>
     @endif
-    <p>ID: {{ $movie->id }}</p>
+    <p>{{ __('ID') }}: {{ $movie->id }}</p>
     <h1>{{ $movie->title }}</h1>
     <img src="{{ $movie->image_url }}" alt="{{ $movie->title }}">
-    <p>公開年: {{ $movie->published_year }}</p>
-    <p>上映中: {{ $movie->is_showing ? '上映中' : '上映予定' }}</p>
+    <p>{{ __('Published Year') }}: {{ $movie->published_year }}</p>
+    <p>{{ __('Is Showing') }}: {{ $movie->is_showing ? __('Showing Status Showing') : __('Showing Status Not Showing') }}</p>
     <p>{{ $movie->description }}</p>
-    <p>ジャンル: {{ $movie->genre->name }}</p>
+    <p>{{ __('Genre') }}: {{ $movie->genre->name }}</p>
     {{--
     <p>登録日時: {{ $movie->created_at }}</p>
     <p>更新日時: {{ $movie->updated_at }}</p>
     --}}
 
-    <h2>スケジュール</h2>
+    <h2>{{ __('Schedule') }}</h2>
     @if ($movie->schedules->isNotEmpty())
         <ul>
             @foreach ($movie->schedules as $schedule)
@@ -37,13 +37,13 @@
                 {{ $schedule->start_time->format('Y-m-d H:i') }} - {{ $schedule->end_time->format('Y-m-d H:i') }}
                 <form action="{{ route('sheets.reserve', [$movie->id, $schedule->id]) }}" method="GET">
                     <input type="hidden" name="date" value="{{ $date }}">
-                    <button type="submit" class="btn btn-primary">座席を予約する</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Reserve Seat') }}</button>
                 </form>
             </li>
             @endforeach
         </ul>
     @else
-        <p>スケジュールはありません</p>
+        <p>{{ __('No schedules available') }}</p>
     @endif
 </body>
 </html>

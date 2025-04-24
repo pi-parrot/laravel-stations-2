@@ -21,34 +21,34 @@
         @endif
         <div>
             <label>
-                映画ID
+                {{ __('Movie ID') }}
                 {{ request('id') }}
             </label>
             <input type="hidden" name="movie_id" value="{{ request('id') }}">
         </div>
         <div>
             <label>
-                開始日付
+                {{ __('Start Date') }}
                 <input type="date" name="start_time_date" value="{{ old('start_time_date') }}" required>
             </label>
             <label>
-                開始時間
+                {{ __('Start Time') }}
                 <input type="time" name="start_time_time" value="{{ old('start_time_time') }}" required>
             </label>
         </div>
         <div>
             <label>
-                終了日付
+                {{ __('End Date') }}
                 <input type="date" name="end_time_date" value="{{ old('end_time_date') }}" required>
             </label>
             <label>
-                終了時間
+                {{ __('End Time') }}
                 <input type="time" name="end_time_time" value="{{ old('end_time_time') }}" required>
             </label>
         </div>
         <div>
-            <button type="submit">登録</button>
-            <a href="{{ route('admin.schedules.index', request('id')) }}">戻る</a>
+            <button type="submit">{{ __('Submit') }}</button>
+            <a href="{{ route('admin.schedules.index', request('id')) }}">{{ __('Back') }}</a>
         </div>
     </form>
 </body>

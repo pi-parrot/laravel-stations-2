@@ -10,17 +10,17 @@
     @if (session('message'))
     <div>{{ session('message') }}</div>
     @endif
-    <a href="{{ route('admin.reservations.create') }}">新規登録</a>
-    <h1>予約</h1>
+    <a href="{{ route('admin.reservations.create') }}">{{ __('Create New') }}</a>
+    <h1>{{ __('Reservation') }}</h1>
     <table>
         <tr>
-            <td>ID</td>
-            <td>映画作品</td>
-            <td>座席</td>
-            <td>日時</td>
-            <td>名前</td>
-            <td>メールアドレス</td>
-            <td>操作</td>
+            <td>{{ __('ID') }}</td>
+            <td>{{ __('Movie Title') }}</td>
+            <td>{{ __('Seat') }}</td>
+            <td>{{ __('Date') }}</td>
+            <td>{{ __('Name') }}</td>
+            <td>{{ __('Email Address') }}</td>
+            <td>{{ __('Actions') }}</td>
         </tr>
         @foreach ($reservations as $reservation)
         <tr>
@@ -31,8 +31,12 @@
             <td>{{ $reservation->name }}</td>
             <td>{{ $reservation->email }}</td>
             <td>
-                <a href="{{ route('admin.reservations.edit', $reservation->id) }}">編集</a>
-                <button type="button" onclick="if (confirm('本当に削除しますか？')) { document.getElementById('delete-form-{{ $reservation->id }}').submit(); }">削除</button>
+                <a href="{{ route('admin.reservations.edit', $reservation->id) }}">{{ __('Edit') }}</a>
+                <button type="button"
+                        data-confirm-message="{{ __('Are you sure you want to delete?') }}"
+                        onclick="if (confirm(this.dataset.confirmMessage)) { document.getElementById('delete-form-{{ $reservation->id }}').submit(); }">
+                    {{ __('Delete') }}
+                </button>
                 <form id="delete-form-{{ $reservation->id }}" action="{{ route('admin.reservations.destroy', $reservation->id) }}" method="POST">
                     @method('DELETE')
                     @csrf

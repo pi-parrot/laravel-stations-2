@@ -22,52 +22,52 @@
         @endif
         <div>
             <label>
-                ID
+                {{ __('ID') }}
                 {{ $schedule->id }}
             </label>
         </div>
         <div>
             <label>
-                映画ID
+                {{ __('Movie ID') }}
                 {{ $schedule->movie_id }}
             </label>
             <input type="hidden" name="movie_id" value="{{ $schedule->movie_id }}">
         </div>
         <div>
             <label>
-                開始日付
+                {{ __('Start Date') }}
                 <input type="date" name="start_time_date" value="{{ $schedule->start_time->format('Y-m-d') }}" required>
             </label>
             <label>
-                開始時間
+                {{ __('Start Time') }}
                 <input type="time" name="start_time_time" value="{{ $schedule->start_time->format('H:i') }}" required>
             </label>
         </div>
         <div>
             <label>
-                終了日付
+                {{ __('End Date') }}
                 <input type="date" name="end_time_date" value="{{ $schedule->end_time->format('Y-m-d') }}" required>
             </label>
             <label>
-                終了時間
+                {{ __('End Time') }}
                 <input type="time" name="end_time_time" value="{{ $schedule->end_time->format('H:i') }}" required>
             </label>
         </div>
         <div>
             <label>
-                登録日時
+                {{ __('Created At') }}
                 {{ $schedule->created_at }}
             </label>
         </div>
         <div>
             <label>
-                更新日時
+                {{ __('Updated At') }}
                 {{ $schedule->updated_at }}
             </label>
         </div>
         <div>
-            <button type="submit">登録</button>
-            <a href="{{ route('admin.schedules.index', $schedule->movie_id) }}">戻る</a>
+            <button type="submit">{{ __('Submit') }}</button>
+            <a href="{{ route('admin.schedules.index', $schedule->movie_id) }}">{{ __('Back') }}</a>
         </div>
     </form>
 </body>

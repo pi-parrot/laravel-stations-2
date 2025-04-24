@@ -8,40 +8,40 @@
 </head>
 <body>
     <div>
-        <h1>{{ $schedule->movie->title }}のスケジュール</h1>
+        <h1>{{ __('Schedule for :movie', ['movie' => $schedule->movie->title]) }}</h1>
         <div>
             <label>
-                ID
+                {{ __('ID') }}
                 {{ $schedule->id }}
             </label>
         </div>
         <div>
             <label>
-                開始時刻
+                {{ __('Start Datetime') }}
                 {{ $schedule->start_time }}
             </label>
         </div>
         <div>
             <label>
-                終了時刻
+                {{ __('End Datetime') }}
                 {{ $schedule->end_time }}
             </label>
         </div>
         <div>
             <label>
-                登録日時
+                {{ __('Created At') }}
                 {{ $schedule->created_at }}
             </label>
         </div>
         <div>
             <label>
-                更新日時
+                {{ __('Updated At') }}
                 {{ $schedule->updated_at }}
             </label>
         </div>
         <div>
-            <a href="{{ route('admin.reservations.create', ['date' => $date, 'scheduleId' => $schedule->id]) }}">予約</a>
-            <a href="{{ route('admin.movies.show', $schedule->movie->id) }}">戻る</a>
+            <a href="{{ route('admin.reservations.create', ['date' => $date, 'scheduleId' => $schedule->id]) }}">{{ __('Reservation') }}</a>
+            <a href="{{ route('admin.movies.show', $schedule->movie->id) }}">{{ __('Back') }}</a>
         </div>
     </div>
 </body>
