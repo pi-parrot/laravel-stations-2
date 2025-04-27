@@ -14,6 +14,7 @@ return [
     'array'                  => ':Attributeには、配列を指定してください。',
     'ascii'                  => ':Attributeには、英数字と記号のみ使用可能です。',
     'attributes' => [
+        'movie_id' => '映画ID',
         'title' => '映画タイトル',
         'image_url' => '画像URL',
         'published_year' => '公開年',

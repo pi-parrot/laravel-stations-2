@@ -7,8 +7,10 @@
     <title>Practice</title>
 </head>
 <body>
-    <form action="{{ route('admin.reservations.store') }}" method="POST">
+    <form action="{{ route('admin.reservations.update', ['id' => $reservation->id]) }}" method="POST">
+        @method('PATCH')
         @csrf
+        <input type="hidden" name="id" value="{{ $reservation->id }}">
         @if (session('message'))
         <div>{{ session('message') }}</div>
         @endif
@@ -25,7 +27,7 @@
                 <select name="movie_id" id="movie_select">
                     <option value="">{{ __('Select Movie') }}</option>
                     @foreach ($movies as $movie)
-                    <option value="{{ $movie->id }}">{{ $movie->title }}</option>
+                    <option value="{{ $movie->id }}" @if($movie->id === $reservation->schedule->movie_id) selected @endif>{{ $movie->title }}</option>
                     @endforeach
                 </select>
             </label>
@@ -33,8 +35,14 @@
         <div>
             <label>
                 {{ __('Schedule') }}
-                <select name="schedule_id" id="schedule_select" disabled>
+                <select name="schedule_id" id="schedule_select">
                     <option value="">{{ __('Select Schedule') }}</option>
+                    @foreach ($schedules[$reservation->schedule->movie_id] ?? [] as $schedule)
+                    <option value="{{ $schedule->id }}" @if($schedule->id === $reservation->schedule_id) selected @endif>
+                        {{ \Carbon\Carbon::parse($schedule->start_time)->format('Y-m-d H:i') }} - 
+                        {{ \Carbon\Carbon::parse($schedule->end_time)->format('Y-m-d H:i') }}
+                    </option>
+                    @endforeach
                 </select>
             </label>
         </div>
@@ -43,7 +51,9 @@
                 {{ __('Seat') }}
                 <select name="sheet_id">
                     @foreach ($sheets as $sheet)
-                    <option value="{{ $sheet->id }}">{{ strtoupper($sheet->row . $sheet->column) }}</option>
+                    <option value="{{ $sheet->id }}" @if($sheet->id === $reservation->sheet_id) selected @endif>
+                        {{ strtoupper($sheet->row . $sheet->column) }}
+                    </option>
                     @endforeach
                 </select>
             </label>
@@ -51,19 +61,25 @@
         <div>
             <label>
                 {{ __('Date') }}
-                <input type="date" name="date" value="{{ old('date') }}" required>
+                <input type="date" name="date" value="{{ old('date', $reservation->date) }}" required>
             </label>
         </div>
         <div>
             <label>
                 {{ __('Reserved Name') }}
-                <input type="text" name="name" value="{{ old('name') }}" required>
+                <input type="text" name="name" value="{{ old('name', $reservation->name) }}" required>
             </label>
         </div>
         <div>
             <label>
                 {{ __('Reserved Email') }}
-                <input type="email" name="email" value="{{ old('email') }}" required>
+                <input type="email" name="email" value="{{ old('email', $reservation->email) }}" required>
+            </label>
+        </div>
+        <div>
+            <label>
+                {{ __('Is Cancelled') }}
+                <input type="checkbox" name="is_canceled" value="1" @if($reservation->is_canceled) checked @endif>
             </label>
         </div>
         <div>
@@ -106,6 +122,11 @@
             }
             scheduleSelect.disabled = false;
         });
+
+        // 初期表示時にスケジュールを有効化
+        if (movieSelect.value) {
+            scheduleSelect.disabled = false;
+        }
     </script>
 </body>
 </html>
