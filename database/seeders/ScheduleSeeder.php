@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Movie;
 use App\Models\Schedule;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 
 class ScheduleSeeder extends Seeder
 {
@@ -22,7 +23,7 @@ class ScheduleSeeder extends Seeder
             ['start_time' => '19:00', 'end_time' => '21:00']
         ];
 
-        $today = Carbon::today();
+        $today = CarbonImmutable::today();
         
         // 本日から3日分のスケジュールを作成
         for ($i = 1; $i <= 3; $i++) {
@@ -34,8 +35,8 @@ class ScheduleSeeder extends Seeder
                         'movie_id' => $movie->id,
                         'start_time' => $targetDate . ' ' . $schedule['start_time'],
                         'end_time' => $targetDate . ' ' . $schedule['end_time'],
-                        'created_at' => now(),
-                        'updated_at' => now(),
+                        'created_at' => CarbonImmutable::now(),
+                        'updated_at' => CarbonImmutable::now(),
                     ]);
                 }
             }

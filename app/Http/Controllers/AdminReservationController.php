@@ -8,6 +8,7 @@ use App\Models\Schedule;
 use App\Models\Sheet;
 use Illuminate\Support\Facades\Validator;
 // use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Log;
 
 class AdminReservationController extends Controller
 {
@@ -18,7 +19,20 @@ class AdminReservationController extends Controller
     {
         $reservations = Reservation::withWhereHas('schedule', function ($query) {
             $query->where('end_time', '>=', now());
-        })->with('schedule.movie', 'sheet')->get();
+        })->whereHas('sheet')->with('schedule.movie', 'sheet')->get();
+        // $reservations = Reservation::withWhereHas('schedule', function ($query) {
+        //     $query->where('end_time', '>=', now());
+        // })->withWhereHas('sheet', function ($query) {
+        //     $query->where('row', '!=', null);
+        // })->with('schedule.movie')->get();
+        // Log::info('Reservations query:', [
+        //     'query' => $reservations->toArray(),
+        //     'now' => now(),
+        // ]);
+        Log::info('Reservations result:', [
+            'reservations' => $reservations->toArray(),
+            'now' => now(),
+        ]);
 
         return view('admin.reservations.index', ['reservations' => $reservations]);
     }

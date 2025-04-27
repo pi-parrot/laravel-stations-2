@@ -10,6 +10,13 @@
     @if (session('message'))
     <div>{{ session('message') }}</div>
     @endif
+    @if (session('errors'))
+    <div>
+        @foreach (session('errors')->all() as $error)
+        <p>{{ $error }}</p>
+        @endforeach
+    </div>
+    @endif
     <a href="{{ route('admin.reservations.create') }}">{{ __('Create New') }}</a>
     <h1>{{ __('Reservation') }}</h1>
     <table>
