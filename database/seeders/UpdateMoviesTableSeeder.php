@@ -13,12 +13,13 @@ class UpdateMoviesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 13; $i <= 18; $i++) {
-            Movie::where('id', $i)->update([
+        // 特定のIDではなく、最新の映画を対象に更新
+        Movie::latest()->take(6)->get()->each(function ($movie, $index) {
+            $movie->update([
                 'published_year' => rand(2000, 2025),
                 'is_showing' => rand(0, 1),
-                'description' => '映画の概要' . $i,
+                'description' => '映画の概要' . ($index + 1),
             ]);
-        }
+        });
     }
 }
