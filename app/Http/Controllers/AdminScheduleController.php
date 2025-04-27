@@ -6,12 +6,14 @@ use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\ValidateStartAndEndTimes;
+// use Illuminate\Support\Facades\DB;
+use Carbon\CarbonImmutable;
 
 class AdminScheduleController extends Controller
 {
     public function index()
     {
-        $schedules = Schedule::with('movie')->orderBy('start_time', 'asc')->where('movie_id', request('id'))->get();
+        $schedules = Schedule::with('movie')->where('movie_id', request('id'))->orderBy('start_time', 'asc')->get();
         return view('admin.schedules.index', ['schedules' => $schedules, 'movie' => $schedules->first()->movie]);
     }
 
@@ -106,6 +108,6 @@ class AdminScheduleController extends Controller
     public function show($id)
     {
         $schedule = Schedule::with('movie')->findOrFail($id);
-        return view('admin.schedules.show', ['schedule' => $schedule]);
+        return view('admin.schedules.show', ['schedule' => $schedule, 'date' => CarbonImmutable::now()->format('Y-m-d')]);
     }   
 }

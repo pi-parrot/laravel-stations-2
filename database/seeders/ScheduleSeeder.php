@@ -16,21 +16,28 @@ class ScheduleSeeder extends Seeder
     {
         $movies = Movie::all();
 
-        $today = Carbon::today()->format('Y-m-d');
-        $schedules = [
-            ['start' => $today . ' 14:00', 'end' => $today . ' 16:00'],
-            ['start' => $today . ' 10:00', 'end' => $today . ' 12:00'],
-            ['start' => $today . ' 19:00', 'end' => $today . ' 21:00']
+        $baseSchedules = [
+            ['start_time' => '10:00', 'end_time' => '12:00'],
+            ['start_time' => '14:00', 'end_time' => '16:00'],
+            ['start_time' => '19:00', 'end_time' => '21:00']
         ];
-        foreach ($movies as $movie) {
-            foreach ($schedules as $schedule) {
-                Schedule::create([
-                    'movie_id' => $movie->id,
-                    'start_time' => $schedule['start'],
-                    'end_time' => $schedule['end'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+
+        $today = Carbon::today();
+        
+        // 本日から3日分のスケジュールを作成
+        for ($i = 1; $i <= 3; $i++) {
+            $targetDate = $today->copy()->addDays($i)->format('Y-m-d');
+
+            foreach ($movies as $movie) {
+                foreach ($baseSchedules as $schedule) {
+                    Schedule::create([
+                        'movie_id' => $movie->id,
+                        'start_time' => $targetDate . ' ' . $schedule['start_time'],
+                        'end_time' => $targetDate . ' ' . $schedule['end_time'],
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
             }
         }
     }

@@ -34,7 +34,7 @@
         <ul>
             @foreach ($movie->schedules as $schedule)
             <li>
-                {{ $schedule->start_time->format('H:i') }} - {{ $schedule->end_time->format('H:i') }}
+                {{ $schedule->start_time->format('Y-m-d H:i') }} - {{ $schedule->end_time->format('Y-m-d H:i') }}
                 <form action="{{ route('sheets.reserve', [$movie->id, $schedule->id]) }}" method="GET">
                     <input type="hidden" name="date" value="{{ $date }}">
                     <button type="submit" class="btn btn-primary">座席を予約する</button>

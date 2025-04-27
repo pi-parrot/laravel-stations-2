@@ -7,7 +7,7 @@
     <title>Practice</title>
 </head>
 <body>
-    <form action="{{ route('reservations.store') }}" method="POST">
+    <form action="{{ route('admin.reservations.store') }}" method="POST">
         @csrf
         @if (session('message'))
         <div>{{ session('message') }}</div>
@@ -21,30 +21,28 @@
         @endif
         <div>
             <label>
-                映画作品
-                {{ $schedule->movie->title }}
-            </label>
-            <input type="hidden" name="movie_id" value="{{ $schedule->movie->id }}">
-        </div>
-        <div>
-            <label>
                 上映スケジュール
-                {{ $schedule->start_time->format('Y-m-d H:i') }} - {{ $schedule->end_time->format('Y-m-d H:i') }}
-                <input type="hidden" name="schedule_id" value="{{ $schedule->id }}">
+                <select name="schedule_id">
+                    @foreach ($schedules as $schedule)
+                    <option value="{{ $schedule->id }}">{{ $schedule->movie->title }} - {{ $schedule->start_time->format('Y-m-d H:i') }} - {{ $schedule->end_time->format('Y-m-d H:i') }}</option>
+                    @endforeach
+                </select>
             </label>
         </div>
         <div>
             <label>
                 座席
-                {{ $request->sheetId }}
-                <input type="hidden" name="sheet_id" value="{{ $request->sheetId }}">
+                <select name="sheet_id">
+                    @foreach ($sheets as $sheet)
+                    <option value="{{ $sheet->id }}">{{ strtoupper($sheet->row . $sheet->column) }}</option>
+                    @endforeach
+                </select>
             </label>
         </div>
         <div>
             <label>
                 日付
-                {{ $request->date }}
-                <input type="hidden" name="date" value="{{ $request->date }}">
+                <input type="date" name="date" value="{{ old('date') }}" required>
             </label>
         </div>
         <div>
@@ -61,7 +59,7 @@
         </div>
         <div>
             <button type="submit">登録</button>
-            <a href="{{ route('sheets.reserve', ['movie_id' => $schedule->movie->id, 'schedule_id' => $schedule->id, 'date' => $request->date]) }}">戻る</a>
+            <a href="{{ route('admin.reservations.index', ['id' => $schedule->movie->id]) }}">戻る</a>
         </div>
     </form>
 </body>

@@ -40,6 +40,7 @@
             </label>
         </div>
         <div>
+            <a href="{{ route('admin.reservations.create', ['date' => $date, 'scheduleId' => $schedule->id]) }}">予約</a>
             <a href="{{ route('admin.movies.show', $schedule->movie->id) }}">戻る</a>
         </div>
     </div>

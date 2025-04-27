@@ -24,6 +24,7 @@ return [
         'start_time_time' => '開始時間',
         'end_time_date' => '終了日',
         'end_time_time' => '終了時間',
+        'date' => '日付',
     ],
     'before'                 => ':Attributeには、:dateより前の日付を指定してください。',
     'before_or_equal'        => ':Attributeには、:date以前の日付を指定してください。',
@@ -164,4 +165,9 @@ return [
     'uppercase'              => ':Attributeは、大文字で入力してください。',
     'url'                    => ':Attributeは、有効なURL形式で指定してください。',
     'uuid'                   => ':Attributeは、有効なUUIDである必要があります。',
+    'values'                 => [
+        'date' => [
+            'today' => '今日',
+        ],
+    ]
 ];

@@ -14,9 +14,13 @@ class Sheet extends Model
         'row',
     ];
 
-    // function schedule()
+    // public function schedule()
     // {
     //     return $this->belongsTo(Schedule::class);
     // }
 
+    // public function movie()
+    // {
+    //     return $this->belongsTo(Movie::class);
+    // }
 }

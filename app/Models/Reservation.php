@@ -16,4 +16,17 @@ class Reservation extends Model
         'name',
         'is_canceled',
     ];
+
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class);
+    }
+
+    public function sheet()
+    {
+        return $this->belongsTo(Sheet::class);
+    }
+
+    // 予約は映画と直接のRelationはない(スケジュールを介している)
+
 }
